@@ -1,28 +1,39 @@
-.App {
-  text-align: center;
+/*  Mobile-specific Styling  */
+@media screen and (max-width: 768px) {
+	.shell {
+	    padding: 1em 1em 1em 1em;
+	}
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+/* Desktop-specific Styling */
+@media screen and (min-width: 768px) {
+	.shell {
+		max-width: 7in;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 32px 32px 32px 32px;
+	}
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.shell {
+	background-color: whitesmoke;
 }
 
-.App-title {
-  font-size: 1.5em;
+html {
+	font-family: Ubuntu, sans-serif;
+	background-color: floralwhite;
+	padding: 1em;
 }
 
-.App-intro {
-  font-size: large;
+p {
+	/* This Puts Indentations on Every Paragraph */
+	text-indent: 1em;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* This class is for centering an element */
+.centered {
+	text-align: center;
+	vertical-align: middle;
+	margin-left: auto;
+	margin-right: auto;
 }
