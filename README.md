@@ -1,3 +1,3 @@
-# roleplay-helper-js
+# Roleplay Helper
 
-A great attempt at deploying a React application to Heroku. 
+A web application written in React/Redux to render and save dynamic character sheets. 
