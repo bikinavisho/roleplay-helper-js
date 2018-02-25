@@ -1,0 +1,42 @@
+import React, {Component} from 'react';
+import ToggleField from '../toggle-field';
+
+class StatBlock extends Component {
+	constructor(props) {
+		super(props);
+
+		this.statNames = [
+			'Power', 'Agility', 'Constitution', 'Acuity', 'Intellect'
+		];
+	}
+
+	render() {
+		return (
+			<table className="pure-table pure-table-horizontal stat-table">
+				<thead>
+				<tr>
+					<th>Stat</th>
+					<th>Value</th>
+					<th>XP</th>
+				</tr>
+				</thead>
+				<tbody>
+				{this.statNames.map((stat, index) => {
+					return (
+						<tr key={index} className="stat-row">
+							<td>{stat}</td>
+							<td><ToggleField/></td>
+							<td>
+								0/10
+								<button>+</button>
+							</td>
+						</tr>
+					);
+				})}
+				</tbody>
+			</table>
+		);
+	}
+}
+
+export default StatBlock;

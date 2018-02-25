@@ -1,0 +1,19 @@
+.roll-table {
+    width: 100%;
+}
+
+.stat-table {
+    width: 90%;
+}
+
+.stat-row td:first-child {
+    width: 50%;
+}
+
+.stat-row td:nth-child(2) {
+    width: 25%;
+}
+
+.stat-row td:nth-child(3) {
+    width: 25%;
+}
