@@ -28,7 +28,6 @@ class StatBlock extends Component {
 							<td><ToggleField/></td>
 							<td>
 								0/10
-								<button>+</button>
 							</td>
 						</tr>
 					);

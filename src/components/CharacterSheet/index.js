@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import DiceRolls from './dice-rolls';
 import StatBlock from './stat-block';
+import ResourceBlock from './resource-block';
 
 import './character-sheet.css';
 
@@ -24,13 +25,16 @@ class CharacterSheet extends Component {
 				<hr/>
 
 				<div className="pure-g">
-					<div className="pure-u-2-3">
-						<div>
+					<div className="pure-u-2-3 pure-g">
+						<div className="pure-u-lg-1-2 pure-u-1">
 							Primary Stat Block
 							<StatBlock/>
 						</div>
 
-						<div>Secondary Stat Block</div>
+						<div className="pure-u-lg-1-2 pure-u-1">
+							Secondary Stat Block
+							<ResourceBlock/>
+						</div>
 					</div>
 					<div className="pure-u-1-3">
 						<DiceRolls/>

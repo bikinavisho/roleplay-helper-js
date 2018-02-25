@@ -6,14 +6,14 @@
     width: 90%;
 }
 
-.stat-row td:first-child {
-    width: 50%;
+.stat-row td {
+    width: 33%;
 }
 
-.stat-row td:nth-child(2) {
-    width: 25%;
+.resource-row td {
+    width: 33%;
 }
 
-.stat-row td:nth-child(3) {
-    width: 25%;
+.resource-row td input {
+    width: 80%;
 }
