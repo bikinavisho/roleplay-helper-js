@@ -1,3 +1,5 @@
+/* global process */
+
 import firebase from 'firebase';
 
 // Initialize Firebase
@@ -9,6 +11,7 @@ let config = {
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSENGING_SENDER_ID
 };
+console.log('config ', config);
 firebase.initializeApp(config);
 const database = firebase.database();
 
