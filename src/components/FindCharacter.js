@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import CharacterNameForm from './CharacterNameForm';
+import database from '../data/database';
 
 
 class FindCharacter extends Component {
 	submitCharacterForm(values) {
 		// values.name
+		database.ref('characters/' + 1).set({
+			characterName: values
+		});
 	}
 
 	render() {
