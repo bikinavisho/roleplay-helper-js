@@ -11,6 +11,10 @@ let config = {
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSENGING_SENDER_ID
 };
+
+console.log('NONSTRING ', process.env.REACT_APP_NONSTRING)
+console.log('STRING ', process.env.REACT_APP_STRING)
+
 console.log('config ', config);
 firebase.initializeApp(config);
 const database = firebase.database();
