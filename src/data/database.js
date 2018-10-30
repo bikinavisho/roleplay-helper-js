@@ -1,6 +1,6 @@
 /* global process */
 
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 // Initialize Firebase
 let config = {
