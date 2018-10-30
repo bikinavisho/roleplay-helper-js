@@ -1,6 +1,8 @@
 /* global process */
 
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+// These imports load individual services into the firebase namespace.
+import 'firebase/database';
 
 // Initialize Firebase
 let config = {
