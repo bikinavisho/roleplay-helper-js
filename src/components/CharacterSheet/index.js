@@ -7,6 +7,9 @@ import './character-sheet.css';
 
 class CharacterSheet extends Component {
 	render() {
+		console.log('NONSTRING ', process.env.REACT_APP_NONSTRING)
+		console.log('STRING ', process.env.REACT_APP_STRING)
+
 		let twoColumns = "pure-u-1-2";
 		let rowTitle = "row-title";
 		let rowContent = "row-content";
