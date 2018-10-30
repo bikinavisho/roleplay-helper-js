@@ -10,7 +10,7 @@ export function popUpSignIn() {
 		// The signed-in user info.
 		const user = result.user;
 	}).catch(function(error) {
-		console.log('AUTHENTICATION FAILURE');
+		console.log('AUTHENTICATION FAILURE ', error);
 		// Handle Errors here.
 		const errorCode = error.code;
 		const errorMessage = error.message;
@@ -24,8 +24,8 @@ export function popUpSignIn() {
 export function redirectSignIn() {
 	firebase.auth().signInWithRedirect(provider).then(() => {
 		console.log('successfully  authenticated')
-	}).catch(() => {
-		console.log('failed to authenticate')
+	}).catch((error) => {
+		console.log('failed to authenticate ', error)
 	});
 }
 
