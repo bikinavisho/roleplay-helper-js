@@ -6,7 +6,7 @@
     "node": "^8.9.4"
   },
   "dependencies": {
-    "firebase": "^4.13.1",
+    "firebase": "^5.5.6",
     "npm": "^6.1.0",
     "purecss": "^1.0.0",
     "react": "^16.4.1",
