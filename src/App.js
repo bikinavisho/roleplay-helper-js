@@ -6,6 +6,10 @@ import CharacterSheet from "./components/CharacterSheet/";
 
 
 class App extends Component {
+	componentDidMount() {
+		console.log('NONSTRING ', process.env.REACT_APP_NONSTRING)
+		console.log('STRING ', process.env.REACT_APP_STRING)
+	}
 
 	render() {
 		return (
