@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 import CharacterNameForm from './CharacterNameForm';
 import database from '../data/database';
-import {popUpSignIn} from '../auth/authenticate';
+import {popUpSignIn, getCredentials, redirectSignIn} from '../auth/authenticate';
 
 
 class FindCharacter extends Component {
 	submitCharacterForm(values) {
 		// values.name
-		database.ref('characters/' + 1).set({
-			characterName: values
+		getCredentials().then(() => {
+			database.ref('characters/' + 1).set({
+				characterName: values.name
+			});
 		});
 	}
 
@@ -21,7 +23,8 @@ class FindCharacter extends Component {
 				<p>
 					To get started, enter your character's name in the form below.
 				</p>
-				<button onClick={popUpSignIn}>Log In</button>
+				<button onClick={popUpSignIn}>Log In (Pop-up)</button>
+				<button onClick={redirectSignIn}>Log In (Redirect)</button>
 				<CharacterNameForm onSubmit={this.submitCharacterForm}/>
 			</div>
 		);

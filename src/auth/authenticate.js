@@ -3,11 +3,13 @@ import provider from './provider';
 
 export function popUpSignIn() {
 	firebase.auth().signInWithPopup(provider).then(function(result) {
+		console.log('AUTHENTICATION SUCESS');
 		// This gives you a Google Access Token. You can use it to access the Google API.
 		const token = result.credential.accessToken;
 		// The signed-in user info.
 		const user = result.user;
 	}).catch(function(error) {
+		console.log('AUTHENTICATION FAILURE');
 		// Handle Errors here.
 		const errorCode = error.code;
 		const errorMessage = error.message;
@@ -19,7 +21,11 @@ export function popUpSignIn() {
 }
 
 export function redirectSignIn() {
-	firebase.auth().signInWithRedirect(provider);
+	firebase.auth().signInWithRedirect(provider).then(() => {
+		console.log('successfully  authenticated')
+	}).catch(() => {
+		console.log('failed to authenticate')
+	});
 }
 
 export function getCredentials() {
