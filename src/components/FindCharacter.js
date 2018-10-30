@@ -7,10 +7,8 @@ import {popUpSignIn, getCredentials, redirectSignIn} from '../auth/authenticate'
 class FindCharacter extends Component {
 	submitCharacterForm(values) {
 		// values.name
-		getCredentials().then(() => {
-			database.ref('characters/' + 1).set({
-				characterName: values.name
-			});
+		database.ref('characters/' + 1).set({
+			characterName: values.name
 		});
 	}
 
