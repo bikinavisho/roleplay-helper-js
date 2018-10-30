@@ -2,6 +2,9 @@
   "name": "roleplay-helper-js",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^8.9.4"
+  },
   "dependencies": {
     "firebase": "^4.13.1",
     "npm": "^6.1.0",
