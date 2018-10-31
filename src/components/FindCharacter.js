@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {storeUserData} from '../redux/actions/user-auth';
 import CharacterNameForm from './CharacterNameForm';
@@ -46,6 +47,11 @@ class FindCharacter extends Component {
 		);
 	}
 }
+
+FindCharacter.propTypes = {
+	userInfo: PropTypes.object,
+	storeUserData: PropTypes.func
+};
 
 function mapStateToProps(state) {
 	return {
