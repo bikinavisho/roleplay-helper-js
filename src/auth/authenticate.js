@@ -3,7 +3,7 @@ import 'firebase/auth';
 import provider from './provider';
 
 export function popUpSignIn() {
-	firebase.auth().signInWithPopup(provider).then(function(result) {
+	return firebase.auth().signInWithPopup(provider).then(function(result) {
 		console.log('AUTHENTICATION SUCCESS');
 		if (result.credential) {
 			// This gives you a Google Access Token. You can use it to access the Google API.
@@ -24,7 +24,7 @@ export function popUpSignIn() {
 }
 
 export function redirectSignIn() {
-	firebase.auth().signInWithRedirect(provider).then(() => {
+	return firebase.auth().signInWithRedirect(provider).then(() => {
 		console.log('successfully  authenticated')
 	}).catch((error) => {
 		console.log('failed to authenticate ', error)
