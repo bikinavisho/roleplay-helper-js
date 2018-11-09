@@ -58,7 +58,7 @@ export function getCredentials() {
 }
 
 export function logOff() {
-	firebase.auth().signOut().then(function() {
+	return firebase.auth().signOut().then(function() {
 		// Sign-out successful.
 	}).catch(function(error) {
 		// An error happened.
