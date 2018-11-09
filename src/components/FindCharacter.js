@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {storeUserData} from '../redux/actions/user-auth';
+import {storeUserData, clearUserData} from '../redux/actions/user-auth';
 import CharacterNameForm from './CharacterNameForm';
 import database from '../data/database';
 import {popUpSignIn, redirectSignIn, logOff} from '../auth/authenticate';
@@ -24,6 +24,10 @@ class FindCharacter extends Component {
 		}
 	}
 
+	logout() {
+		logOff().then(this.props.clearUserData);
+	}
+
 	render() {
 		return (
 			<div>
@@ -34,7 +38,7 @@ class FindCharacter extends Component {
 					To get started, enter your character's name in the form below.
 				</p>
 				{ this.props.userInfo.isLoggedIn ?
-					<button onClick={logOff}>Logoff</button> :
+					<button onClick={this.logout}>Logoff</button> :
 					<React.Fragment>
 						<button onClick={() => {this.login('popup')}}>Log In (Pop-up)</button>
 						<button onClick={() => {this.login('redirect')}}>Log In (Redirect)</button>
@@ -49,6 +53,7 @@ class FindCharacter extends Component {
 }
 
 FindCharacter.propTypes = {
+	clearUserData: PropTypes.func,
 	userInfo: PropTypes.object,
 	storeUserData: PropTypes.func
 };
@@ -59,4 +64,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, {storeUserData})(FindCharacter);
+export default connect(mapStateToProps, {storeUserData, clearUserData})(FindCharacter);

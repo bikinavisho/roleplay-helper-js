@@ -1,11 +1,9 @@
 import * as userActionTypes from '../actions/user-auth';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
 
 export default function (state = {}, action = {}) {
 	switch(action.type) {
 		case userActionTypes.STORE_USER_DATA:
-			let user = firebase.auth().currentUser;
+			let user = action.payload;
 
 			if (user) {
 				let userData = {};
@@ -24,7 +22,9 @@ export default function (state = {}, action = {}) {
 				return {...state, isLoggedIn: false, loggedInUser: 'not signed in'};
 			}
 
-
+		case userActionTypes.CLEAR_USER_DATA:
+			// When the user is logged out, clear out all of their data
+			return {isLoggedIn: false, loggedInUser: 'not signed in'};
 	}
 
 	return state;
