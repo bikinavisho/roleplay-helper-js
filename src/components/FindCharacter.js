@@ -8,6 +8,13 @@ import {popUpSignIn, redirectSignIn, logOff} from '../auth/authenticate';
 
 
 class FindCharacter extends Component {
+	constructor(props) {{
+		super(props);
+
+		this.login = this.login.bind(this);
+		this.logout = this.logout.bind(this);
+	}}
+
 	submitCharacterForm(values) {
 		// values.name
 		database.ref('characters/' + 1).set({
