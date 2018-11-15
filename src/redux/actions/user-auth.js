@@ -18,16 +18,19 @@ export function createNewUser() {
 	let currentUser = firebase.auth().currentUser;
 	if (currentUser) {
 		let ref = database.ref('users');
-		ref.orderByChild('email').equalTo(currentUser.email).once('value').then((result) => {
-			console.log('query result: ', result);
+		database.ref('users' + genUid(16)).set(new User(currentUser.email, 'GM')).then(() => {
+			console.log('user successfully created')
 		}).catch((e) => {
-			console.log('query failed ', e);
-			database.ref('users' + genUid(16)).set(new User(currentUser.email, 'GM')).then(() => {
-				console.log('user successfully created')
+			console.log('user failed to create ', e);
+		}).then(() => {
+			//TODO: refactor this
+			ref.orderByChild('email').equalTo(currentUser.email).once('value').then((result) => {
+				console.log('query result: ', result);
 			}).catch((e) => {
-				console.log('user failed to create ', e);
+				console.log('query failed ', e);
 			});
 		});
+
 	}
 }
 
