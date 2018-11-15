@@ -1,5 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import genUid from 'uid-safe';
+import {User} from '../../data/user';
 
 export const STORE_USER_DATA = 'STORE_USER_DATA';
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
@@ -9,6 +11,21 @@ export function storeUserData() {
 		type: STORE_USER_DATA,
 		payload: firebase.auth().currentUser
 	};
+}
+
+export function createNewUser() {
+	let currentUser = firebase.auth().currentUser;
+	let ref = firebase.database().ref('users');
+	ref.orderByChild('email').equalTo(currentUser.email).once('value').then((result) => {
+		console.log('query result: ', result);
+	}).catch((e) => {
+		console.log('query failed ', e);
+		ref.set({[genUid(16)]: new User(currentUser.email, 'GM')}).then(() => {
+			console.log('user successfully created')
+		}).catch((e) => {
+			console.log('user failed to create ', e);
+		});
+	});
 }
 
 export function clearUserData() {

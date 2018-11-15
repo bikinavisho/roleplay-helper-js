@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {storeUserData, clearUserData} from '../redux/actions/user-auth';
+import {storeUserData, clearUserData, createNewUser} from '../redux/actions/user-auth';
 import CharacterNameForm from './CharacterNameForm';
 import database from '../data/database';
 import {popUpSignIn, redirectSignIn, logOff} from '../auth/authenticate';
@@ -17,10 +17,16 @@ class FindCharacter extends Component {
 
 	login(type) {
 		if (type === 'redirect') {
-			redirectSignIn().then(this.props.storeUserData);
+			redirectSignIn().then(() => {
+				this.props.storeUserData();
+				createNewUser();
+			});
 		}
 		if (type === 'popup') {
-			popUpSignIn().then(this.props.storeUserData)
+			popUpSignIn().then(() => {
+				this.props.storeUserData();
+				createNewUser();
+			})
 		}
 	}
 
