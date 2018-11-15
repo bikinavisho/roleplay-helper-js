@@ -18,7 +18,7 @@ export function createNewUser() {
 	let currentUser = firebase.auth().currentUser;
 	if (currentUser) {
 		let ref = database.ref('users');
-		database.ref('users' + genUid(16)).set(new User(currentUser.email, 'GM')).then(() => {
+		database.ref('users' + genUid.sync(16)).set(new User(currentUser.email, 'GM')).then(() => {
 			console.log('user successfully created')
 		}).catch((e) => {
 			console.log('user failed to create ', e);
