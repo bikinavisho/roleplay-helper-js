@@ -5,6 +5,8 @@ import {storeUserData, clearUserData, createNewUser} from '../redux/actions/user
 import CharacterNameForm from './CharacterNameForm';
 import database from '../data/database';
 import {popUpSignIn, redirectSignIn, logOff} from '../auth/authenticate';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 
 class FindCharacter extends Component {
@@ -14,6 +16,12 @@ class FindCharacter extends Component {
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
 	}}
+
+	componentDidMount() {
+		if (firebase.auth().currentUser) {
+			this.props.storeUserData();
+		}
+	}
 
 	submitCharacterForm(values) {
 		// values.name
