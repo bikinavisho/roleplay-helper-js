@@ -1,6 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import database from '../data/database';
+import database from '../../data/database';
 import genUid from 'uid-safe';
 import {User} from '../../data/user';
 
