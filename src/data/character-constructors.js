@@ -31,9 +31,9 @@ export function Character() {
 	this.gender = "Undefined";
 	this.race = "Human";
 	this.level = 0;
-	this.skills = [];
-	this.abilities = [];
-	this.inventory = [];
+	this.skills = {0: new Skill()};
+	this.abilities = {0: new Ability()};
+	this.inventory = {0: new InventoryItem()};
 	this.equipment = new Equipment();
 }
 
