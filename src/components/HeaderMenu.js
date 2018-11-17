@@ -1,13 +1,35 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import '../css/responsive-menu.css';
+import {popUpSignIn, logOff} from '../auth/authenticate';
+import {storeUserData, clearUserData, createNewUser} from '../redux/actions/user-auth';
 
 
-export default class HeaderMenu extends Component {
+class HeaderMenu extends Component {
+	constructor(props) {
+		super(props);
+
+		this.login = this.login.bind(this);
+		this.logout = this.logout.bind(this);
+	}
+
 	componentDidMount() {
 		document.getElementById('toggle').addEventListener('click', function (e) {
 			document.getElementById('tuckedMenu').classList.toggle('custom-menu-tucked');
 			document.getElementById('toggle').classList.toggle('x');
 		});
+	}
+
+	login() {
+		popUpSignIn().then(() => {
+			this.props.storeUserData();
+			createNewUser();
+		})
+	}
+
+	logout() {
+		logOff().then(this.props.clearUserData);
 	}
 
 	render() {
@@ -24,20 +46,37 @@ export default class HeaderMenu extends Component {
 					id="tuckedMenu">
 					<div className="custom-menu-screen"/>
 					<ul className="pure-menu-list">
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Home</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">About</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Contact</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Blog</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">GitHub</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Twitter</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Apple</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Google</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Wang</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">Yahoo</a></li>
-						<li className="pure-menu-item"><a href="#" className="pure-menu-link">W3C</a></li>
+						<li className="pure-menu-item"><a href="/" className="pure-menu-link">Home</a></li>
+						<li className="pure-menu-item"><a href="javascript:" className="pure-menu-link">
+							{this.props.userInfo.isLoggedIn
+								? <button className="pure-button" onClick={this.logout}>
+									<i className="fas fa-sign-out-alt"/>
+									Logout
+								</button>
+								: <button className="pure-button" onClick={this.login}>
+									<i className="fas fa-sign-in-alt"/>
+									Login
+								</button>
+							}
+
+						</a></li>
 					</ul>
 				</div>
 			</div>
 		);
 	};
 }
+
+HeaderMenu.props = {
+	clearUserData: PropTypes.func,
+	storeUserData: PropTypes.func,
+	userInfo: PropTypes.object
+};
+
+function mapStateToProps(state) {
+	return {
+		userInfo: state.userInfo
+	};
+}
+
+export default connect(mapStateToProps, {storeUserData, clearUserData})(HeaderMenu);

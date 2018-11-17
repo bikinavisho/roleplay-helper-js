@@ -9,7 +9,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 
-class FindCharacter extends Component {
+class Home extends Component {
 	constructor(props) {{
 		super(props);
 
@@ -56,7 +56,7 @@ class FindCharacter extends Component {
 					<h1>Towers of Divinity</h1>
 				</header>
 				<p>
-					To get started, enter your character's name in the form below.
+					Welcome to the roleplay helper! To get started, please log in!
 				</p>
 				{ this.props.userInfo.isLoggedIn ?
 					<button onClick={this.logout}>Logoff</button> :
@@ -73,7 +73,7 @@ class FindCharacter extends Component {
 	}
 }
 
-FindCharacter.propTypes = {
+Home.propTypes = {
 	clearUserData: PropTypes.func,
 	userInfo: PropTypes.object,
 	storeUserData: PropTypes.func
@@ -85,4 +85,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, {storeUserData, clearUserData})(FindCharacter);
+export default connect(mapStateToProps, {storeUserData, clearUserData})(Home);
