@@ -50,7 +50,7 @@ class HeaderMenu extends Component {
 						<li className="pure-menu-item">
 							<Link to="/" className="pure-menu-link">Home</Link>
 						</li>
-						{this.props.userInfo.isLoggedIn &&
+						{this.props.userInfo.isLoggedIn && this.props.userInfo.userData &&
 							<li className="pure-menu-item">
 								<Link to={'/user/' + this.props.userInfo.userData.uid} className="pure-menu-link">
 									<i className="fas fa-user"/>&nbsp;User: {this.props.userInfo.loggedInUser.displayName}
