@@ -71,8 +71,7 @@ class HeaderMenu extends Component {
 									Login
 								</a>
 							}
-
-						</a></li>
+						</li>
 					</ul>
 				</div>
 			</div>
