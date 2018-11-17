@@ -3,10 +3,10 @@ import 'firebase/auth';
 import database from '../../data/database';
 import genUid from 'uid-safe';
 import {User} from '../../data/user';
-import {Character} from '../../data/character-constructors';
 
 export const STORE_USER_DATA = 'STORE_USER_DATA';
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
+export const STORE_USER_DB_ENTRY = 'STORE_USER_DB_ENTRY';
 
 export function storeUserData() {
 	return {
@@ -16,18 +16,30 @@ export function storeUserData() {
 }
 
 export function createNewUser() {
-	let currentUser = firebase.auth().currentUser;
-	if (currentUser) {
-		let ref = database.ref('users');
-		// Search for instances in the database that might already have this email address
-		ref.orderByChild('email').equalTo(currentUser.email).once('value').then((dataSnapshot) => {
-			// Returns true if there are values, false if there are no values
-			if (!dataSnapshot.exists()) {
-				// If user doesn't already exist, add them to the database
-				database.ref('users/' + genUid.sync(16)).set(new User(currentUser.email, 'player'));
-			}
-		});
-	}
+	return (dispatch, getState) => {
+		let currentUser = firebase.auth().currentUser;
+		if (currentUser) {
+			let ref = database.ref('users');
+			// Search for instances in the database that might already have this email address
+			ref.orderByChild('email').equalTo(currentUser.email).once('value').then((dataSnapshot) => {
+				// Returns true if there are values, false if there are no values
+				if (dataSnapshot.exists()) {
+					dispatch({
+						type: STORE_USER_DB_ENTRY,
+						payload: dataSnapshot.exportVal()
+					});
+				} else {
+					// If user doesn't already exist, add them to the database
+					let uid = genUid.sync(16);
+					database.ref('users/' + uid).set(new User(currentUser.email, 'player'));
+					dispatch({
+						type: STORE_USER_DB_ENTRY,
+						payload: {uid}
+					});
+				}
+			});
+		}
+	};
 }
 
 // dataSnapshot.exportVal();

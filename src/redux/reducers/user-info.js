@@ -22,6 +22,9 @@ export default function (state = {}, action = {}) {
 				return {...state, isLoggedIn: false, loggedInUser: 'not signed in'};
 			}
 
+		case userActionTypes.STORE_USER_DB_ENTRY:
+			return {...state, userData: action.payload};
+
 		case userActionTypes.CLEAR_USER_DATA:
 			// When the user is logged out, clear out all of their data
 			return {isLoggedIn: false, loggedInUser: 'not signed in'};
