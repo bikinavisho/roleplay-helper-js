@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import '../css/responsive-menu.css';
@@ -47,28 +47,15 @@ class HeaderMenu extends Component {
 					<div className="custom-menu-screen"/>
 					<ul className="pure-menu-list">
 						<li className="pure-menu-item"><a href="/" className="pure-menu-link">Home</a></li>
-						<li className="pure-menu-item"><a href="javascript:" className="pure-menu-link">
-							{this.props.userInfo.isLoggedIn
-								? <button className="pure-button" onClick={this.logout}>
-									<i className="fas fa-sign-out-alt"/>
-									Logout
-								</button>
-								: <button className="pure-button" onClick={this.login}>
-									<i className="fas fa-sign-in-alt"/>
-									Login
-								</button>
-							}
-
-						</a></li>
 						<li className="pure-menu-item">
 							{this.props.userInfo.isLoggedIn
-								? <a href="javascript:this.login();" className="pure-menu-link">
+								? <a href="javascript:" className="pure-menu-link" onClick={this.logout}>
 									<i className="fas fa-sign-out-alt"/>
-									Logout
+									&nbsp;Logout
 								</a>
-								: <a href="javascript:this.logout();" className="pure-menu-link">
+								: <a href="javascript:" className="pure-menu-link" onClick={this.login}>
 									<i className="fas fa-sign-in-alt"/>
-									Login
+									&nbsp;Login
 								</a>
 							}
 						</li>
