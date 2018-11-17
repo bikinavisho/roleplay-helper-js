@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './toggle-field.css';
+import '../css/toggle-field.css';
 
 
 class ToggleField extends Component {
