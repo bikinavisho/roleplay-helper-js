@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom'
 import FindCharacter from './components/Home';
-import './App.css';
+import './css/App.css';
 import CharacterSheet from "./components/CharacterSheet/";
 import HeaderMenu from './components/HeaderMenu';
 

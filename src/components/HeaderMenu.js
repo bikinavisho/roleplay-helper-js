@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import '../css/responsive-menu.css';
@@ -57,6 +57,19 @@ class HeaderMenu extends Component {
 									<i className="fas fa-sign-in-alt"/>
 									Login
 								</button>
+							}
+
+						</a></li>
+						<li className="pure-menu-item"><a href={this.props.userInfo.isLoggedIn ? "javascript:this.logout();" : "javascript:this.login();"} className="pure-menu-link">
+							{this.props.userInfo.isLoggedIn
+								? <Fragment>
+									<i className="fas fa-sign-out-alt"></i>
+									Logout
+								</Fragment>
+								: <Fragment>
+									<i className="fas fa-sign-in-alt"></i>
+									Login
+								</Fragment>
 							}
 
 						</a></li>
