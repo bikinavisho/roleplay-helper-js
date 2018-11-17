@@ -29,7 +29,7 @@ export default function (state = {}, action = {}) {
 			// Goal: flatten object so can access all properties with one jump
 			Object.keys(action.payload).forEach((key) => {
 				userData = Object.assign(userData, action.payload[key]);
-				output.uid = key;
+				userData.uid = key;
 			});
 			return {...state, userData};
 			// output: {userData: {uid, email, role, characters, roles}}
