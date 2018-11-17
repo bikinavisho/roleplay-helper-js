@@ -23,6 +23,18 @@ export default function (state = {}, action = {}) {
 			}
 
 		case userActionTypes.STORE_USER_DB_ENTRY:
+			let userData = {};
+			// The object we are receiving looks like:
+			// {[uid]: {userData} }
+			// Goal: flatten object so can access all properties with one jump
+			Object.keys(action.payload).forEach((key) => {
+				userData = Object.assign(userData, action.payload[key]);
+				output.uid = key;
+			});
+			return {...state, userData};
+			// output: {userData: {uid, email, role, characters, roles}}
+
+		case userActionTypes.STORE_USER_UID:
 			return {...state, userData: action.payload};
 
 		case userActionTypes.CLEAR_USER_DATA:

@@ -22,7 +22,7 @@ class UserHomePage extends Component {
 		);
 	}
 }
-UserHomePage.props = {
+UserHomePage.propTypes = {
 	match: PropTypes.shape({			// react-router-dom
 		params: PropTypes.object,
 		isExact: PropTypes.bool,

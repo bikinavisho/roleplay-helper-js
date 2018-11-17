@@ -7,6 +7,7 @@ import {User} from '../../data/user';
 export const STORE_USER_DATA = 'STORE_USER_DATA';
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
 export const STORE_USER_DB_ENTRY = 'STORE_USER_DB_ENTRY';
+export const STORE_USER_UID = 'STORE_USER_UID';
 
 export function storeUserData() {
 	return {
@@ -16,7 +17,7 @@ export function storeUserData() {
 }
 
 export function createNewUser() {
-	return (dispatch, getState) => {
+	return (dispatch) => {
 		let currentUser = firebase.auth().currentUser;
 		if (currentUser) {
 			let ref = database.ref('users');
@@ -33,8 +34,8 @@ export function createNewUser() {
 					let uid = genUid.sync(16);
 					database.ref('users/' + uid).set(new User(currentUser.email, 'player'));
 					dispatch({
-						type: STORE_USER_DB_ENTRY,
-						payload: {uid}
+						type: STORE_USER_UID,
+						payload: {uid, email: currentUser.email}
 					});
 				}
 			});

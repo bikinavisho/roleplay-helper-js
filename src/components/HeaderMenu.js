@@ -47,10 +47,14 @@ class HeaderMenu extends Component {
 					id="tuckedMenu">
 					<div className="custom-menu-screen"/>
 					<ul className="pure-menu-list">
-						<li className="pure-menu-item"><a href="/" className="pure-menu-link">Home</a></li>
+						<li className="pure-menu-item">
+							<Link to="/" className="pure-menu-link">Home</Link>
+						</li>
 						{this.props.userInfo.isLoggedIn &&
 							<li className="pure-menu-item">
-								<Link to="/user/" className="pure-menu-link">{this.props.userInfo.loggedInUser.displayName}</Link>
+								<Link to={'/user/' + this.props.userInfo.userData.uid} className="pure-menu-link">
+									<i className="fas fa-user"/>&nbsp;User: {this.props.userInfo.loggedInUser.displayName}
+								</Link>
 							</li>
 						}
 						<li className="pure-menu-item">
