@@ -60,16 +60,16 @@ class HeaderMenu extends Component {
 							}
 
 						</a></li>
-						<li className="pure-menu-item"><a href={this.props.userInfo.isLoggedIn ? "javascript:this.logout();" : "javascript:this.login();"} className="pure-menu-link">
+						<li className="pure-menu-item">
 							{this.props.userInfo.isLoggedIn
-								? <Fragment>
-									<i className="fas fa-sign-out-alt"></i>
+								? <a href="javascript:this.login();" className="pure-menu-link">
+									<i className="fas fa-sign-out-alt"/>
 									Logout
-								</Fragment>
-								: <Fragment>
-									<i className="fas fa-sign-in-alt"></i>
+								</a>
+								: <a href="javascript:this.logout();" className="pure-menu-link">
+									<i className="fas fa-sign-in-alt"/>
 									Login
-								</Fragment>
+								</a>
 							}
 
 						</a></li>
