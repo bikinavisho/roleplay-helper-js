@@ -17,7 +17,7 @@ export function storeUserData() {
 	};
 }
 
-export function createNewUser() {
+export function getUserDatabaseData(isNew = false) {
 	return (dispatch) => {
 		let currentUser = firebase.auth().currentUser;
 		if (currentUser) {
@@ -26,7 +26,7 @@ export function createNewUser() {
 				// Returns true if there are values, false if there are no values
 				if (dataSnapshot.exists()) {
 					dispatch(storeUserDBEntry(dataSnapshot.exportVal()));
-				} else {
+				} else if (isNew) {
 					// If user doesn't already exist, add them to the database
 					let uid = genUid.sync(16);
 					database.ref('users/' + uid).set(new User(currentUser.email, 'player'));
@@ -44,12 +44,6 @@ export function storeUserDBEntry(dBEntry) {
 	return {
 		type: STORE_USER_DB_ENTRY,
 		payload: dBEntry
-	};
-}
-
-export function reinstantiateUserFromCookie() {
-	return (dispatch) => {
-		console.log('ACTION DISPATCHED: USER SHOULD GO TO STORE NOW')
 	};
 }
 

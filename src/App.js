@@ -1,32 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router-dom'
-import {connect} from 'react-redux';
 import {withCookies} from 'react-cookie';
 import Home from './components/Home';
 import './css/App.css';
 import CharacterSheet from "./components/CharacterSheet/";
 import HeaderMenu from './components/HeaderMenu';
 import UserHomePage from './components/UserHomePage';
-import {getUserFromCookies} from './utils/cookie-utils';
-import {isUserAuthenticated, checkForAuthentication} from './utils/firebase-utils';
-import {reinstantiateUserFromCookie} from './redux/actions/user-auth';
 
 
 class App extends Component {
-	componentDidMount() {
-		console.log('APP user is authenticated (componentDidMount): ', isUserAuthenticated());
-		checkForAuthentication();
-		// If user is not logged in, check to see if auth user is inside cookies
-		// if (!this.props.userInfo.isLoggedIn) {
-		// 	getUserFromCookies(this.props.cookies);
-		// 	this.props.reinstantiateUserFromCookie();
-		// }
-	}
-
 	render() {
 		console.log('APP get all cookies: ', this.props.cookies.getAll());
-		console.log('APP user is authenticated (render): ', isUserAuthenticated());
 		return (
 			<React.Fragment>
 				<HeaderMenu/>
@@ -44,14 +29,6 @@ class App extends Component {
 
 App.propTypes = {
 	cookies: PropTypes.object, 		// from react-cookies (withCookies)
-	reinstantiateUserFromCookie: PropTypes.func,	// from redux
-	userInfo: PropTypes.object  	// from redux
 };
 
-function mapStateToProps(state) {
-	return {
-		userInfo: state.userInfo
-	};
-}
-
-export default withCookies(connect(mapStateToProps, {reinstantiateUserFromCookie})(App));
+export default withCookies(App);

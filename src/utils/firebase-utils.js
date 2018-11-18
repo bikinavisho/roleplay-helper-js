@@ -6,17 +6,8 @@ export function isUserAuthenticated() {
 	return Boolean(firebase.auth().currentUser);
 }
 
-export function checkForAuthentication() {
-	console.log('checking for authentication')
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			// User is signed in.
-			console.log("HOUSTON WE HAVE AUTH!")
-		} else {
-			console.log("No auth :(")
-		}
-	});
-
+export function checkForAuthentication(callbackFunction) {
+	firebase.auth().onAuthStateChanged(callbackFunction);
 }
 
 export function userQueryByEmail(email) {

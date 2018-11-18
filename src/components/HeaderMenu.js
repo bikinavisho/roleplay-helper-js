@@ -5,8 +5,9 @@ import {Link} from 'react-router-dom';
 import {withCookies} from 'react-cookie';
 import '../css/responsive-menu.css';
 import {popUpSignIn, logOff} from '../auth/authenticate';
-import {storeUserData, clearUserData, createNewUser} from '../redux/actions/user-auth';
-import {putUserIntoCookies, removeUserFromCookies} from '../utils/cookie-utils';
+import {storeUserData, clearUserData, getUserDatabaseData} from '../redux/actions/user-auth';
+import {removeUserFromCookies} from '../utils/cookie-utils';
+import {checkForAuthentication} from "../utils/firebase-utils";
 
 
 class HeaderMenu extends Component {
@@ -22,13 +23,18 @@ class HeaderMenu extends Component {
 			document.getElementById('tuckedMenu').classList.toggle('custom-menu-tucked');
 			document.getElementById('toggle').classList.toggle('x');
 		});
+		checkForAuthentication((user) => {
+			if (user) {
+				this.props.storeUserData();
+				this.props.getUserDatabaseData(false);
+			}
+		});
 	}
 
 	login() {
 		popUpSignIn().then(() => {
 			this.props.storeUserData();
-			this.props.createNewUser();
-			putUserIntoCookies(this.props.cookies);
+			this.props.getUserDatabaseData(true);
 		})
 	}
 
@@ -59,11 +65,11 @@ class HeaderMenu extends Component {
 							<Link to="/" className="pure-menu-link">Home</Link>
 						</li>
 						{this.props.userInfo.isLoggedIn && this.props.userInfo.userData &&
-							<li className="pure-menu-item">
-								<Link to={'/user/' + this.props.userInfo.userData.uid} className="pure-menu-link">
-									<i className="fas fa-user"/>&nbsp;User: {this.props.userInfo.loggedInUser.displayName}
-								</Link>
-							</li>
+						<li className="pure-menu-item">
+							<Link to={'/user/' + this.props.userInfo.userData.uid} className="pure-menu-link">
+								<i className="fas fa-user"/>&nbsp;User: {this.props.userInfo.loggedInUser.displayName}
+							</Link>
+						</li>
 						}
 						<li className="pure-menu-item">
 							{this.props.userInfo.isLoggedIn
@@ -87,7 +93,7 @@ class HeaderMenu extends Component {
 HeaderMenu.propTypes = {
 	cookies: PropTypes.object,			// from react-cookies (withCookies)
 	clearUserData: PropTypes.func,
-	createNewUser: PropTypes.func,
+	getUserDatabaseData: PropTypes.func,
 	storeUserData: PropTypes.func,
 	userInfo: PropTypes.object
 };
@@ -98,4 +104,8 @@ function mapStateToProps(state) {
 	};
 }
 
-export default withCookies(connect(mapStateToProps, {storeUserData, clearUserData, createNewUser})(HeaderMenu));
+export default withCookies(connect(mapStateToProps, {
+	storeUserData,
+	clearUserData,
+	getUserDatabaseData
+})(HeaderMenu));
