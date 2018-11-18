@@ -16,10 +16,10 @@ import {reinstantiateUserFromCookie} from './redux/actions/user-auth';
 class App extends Component {
 	componentDidMount() {
 		// If user is not logged in, check to see if auth user is inside cookies
-		if (!this.props.userInfo.isLoggedIn) {
-			getUserFromCookies(this.props.cookies);
-			this.props.reinstantiateUserFromCookie();
-		}
+		// if (!this.props.userInfo.isLoggedIn) {
+		// 	getUserFromCookies(this.props.cookies);
+		// 	this.props.reinstantiateUserFromCookie();
+		// }
 	}
 
 	render() {
