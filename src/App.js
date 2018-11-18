@@ -9,6 +9,7 @@ import CharacterSheet from "./components/CharacterSheet/";
 import HeaderMenu from './components/HeaderMenu';
 import UserHomePage from './components/UserHomePage';
 import {getUserFromCookies} from './utils/cookie-utils';
+import {isUserAuthenticated} from './utils/firebase-utils';
 import {reinstantiateUserFromCookie} from './redux/actions/user-auth';
 
 
@@ -16,13 +17,14 @@ class App extends Component {
 	componentDidMount() {
 		// If user is not logged in, check to see if auth user is inside cookies
 		if (!this.props.userInfo.isLoggedIn) {
-			console.log('APP get all cookies: ', this.props.cookies.getAll())
 			getUserFromCookies(this.props.cookies);
 			this.props.reinstantiateUserFromCookie();
 		}
 	}
 
 	render() {
+		console.log('APP get all cookies: ', this.props.cookies.getAll());
+		console.log('APP user is authenticated: ', isUserAuthenticated());
 		return (
 			<React.Fragment>
 				<HeaderMenu/>

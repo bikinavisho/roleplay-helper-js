@@ -17,7 +17,7 @@ export function putUserIntoCookies(cookies) {
 }
 
 export function getUserFromCookies(cookies) {
-	let firebaseUser = cookies.get(FIREBASE_USER_COOKIE_KEY);
+	let firebaseUser = cookies.get(FIREBASE_USER_COOKIE_KEY, {doNotParse: true});
 	if (firebaseUser) {
 		firebase.auth().updateCurrentUser(firebaseUser).then(() => {
 			console.log('retrieved and set user cookie successfully');
