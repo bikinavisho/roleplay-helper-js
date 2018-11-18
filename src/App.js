@@ -16,6 +16,7 @@ class App extends Component {
 	componentDidMount() {
 		// If user is not logged in, check to see if auth user is inside cookies
 		if (!this.props.userInfo.isLoggedIn) {
+			console.log('APP get all cookies: ', this.props.cookies.getAll())
 			getUserFromCookies(this.props.cookies);
 			this.props.reinstantiateUserFromCookie();
 		}

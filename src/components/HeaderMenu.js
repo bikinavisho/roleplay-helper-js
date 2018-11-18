@@ -40,6 +40,8 @@ class HeaderMenu extends Component {
 	}
 
 	render() {
+		console.log('HEADER MENU COOKIES: ', this.props.cookies.getAll());
+
 		return (
 			<div className="custom-menu-wrapper">
 				<div className="pure-menu custom-menu custom-menu-top">
