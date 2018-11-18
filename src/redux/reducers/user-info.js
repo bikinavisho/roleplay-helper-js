@@ -6,15 +6,11 @@ export default function (state = {}, action = {}) {
 			let user = action.payload;
 
 			if (user) {
-				let userData = {};
-				userData.displayName = user.displayName;
 				// User is signed in.
-				user.providerData.forEach((profile) => {
-					userData[profile.providerId] = {
-						name: profile.displayName,
-						email: profile.email,
-						photoUrl: profile.photoURL
-					};
+				let userData = {};
+				// Store relevant user data
+				['displayName', 'email', 'photoURL', 'lastLoginAt', 'createdAt'].forEach((key) => {
+					userData[key] = user[key];
 				});
 				return {...state, isLoggedIn: true, loggedInUser: userData};
 			} else {

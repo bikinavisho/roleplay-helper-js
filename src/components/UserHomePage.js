@@ -2,33 +2,60 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import _ from 'lodash';
 
 
 class UserHomePage extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			noCharacterData: false,
+			noRaceData: false
+		};
+	}
+
 	componentDidMount() {
-		console.log("this.props.match ", this.props.match);
+		if (this.props.userInfo && this.props.userInfo.isLoggedIn && this.props.userInfo.userData) {
+			let {userData} = this.props.userInfo;
+			// If there is no data, display alternative message
+			if (_.isEmpty(userData.characters)) {
+				this.setState({noCharacterData: true});
+			} else {
+				// TODO: Fetch Characters and display them
+			}
+			// If there is no data, display alternative message
+			if (_.isEmpty(userData.races)) {
+				this.setState({noRaceData: true})
+			} else {
+				// TODO: Fetch Races and display them
+			}
+		}
 	}
 
 	render() {
-		if (!this.props.userInfo.isLoggedIn) {
+		// If user is not logged in, redirect them to the home page
+		if (this.props.userInfo && this.props.userInfo.isLoggedIn === false) {
 			return <Redirect to="/"/>;
 		}
 
 
 		return (
 			<div>
-				<h1>Your Characters</h1>
+				<h2>Your Characters</h2>
+				<div>
+					{this.state.noCharacterData && "Looks like you don't have any characters yet. Start by creating one!"}
+				</div>
+				<hr/>
+				<h2>Your Races</h2>
+				<div>
+					{this.state.noRaceData && "Looks like you don't have any races yet. Start by creating one!"}
+				</div>
 			</div>
 		);
 	}
 }
 UserHomePage.propTypes = {
-	match: PropTypes.shape({			// react-router-dom
-		params: PropTypes.object,
-		isExact: PropTypes.bool,
-		path: PropTypes.string,
-		url: PropTypes.string
-	}),
 	userInfo: PropTypes.object   // redux state
 };
 

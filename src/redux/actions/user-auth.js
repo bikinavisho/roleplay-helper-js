@@ -3,6 +3,7 @@ import 'firebase/auth';
 import database from '../../data/database';
 import genUid from 'uid-safe';
 import {User} from '../../data/user';
+import {findUserByEmail, userQueryByEmail} from '../../utils/firebase-utils';
 
 export const STORE_USER_DATA = 'STORE_USER_DATA';
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
@@ -20,15 +21,11 @@ export function createNewUser() {
 	return (dispatch) => {
 		let currentUser = firebase.auth().currentUser;
 		if (currentUser) {
-			let ref = database.ref('users');
 			// Search for instances in the database that might already have this email address
-			ref.orderByChild('email').equalTo(currentUser.email).once('value').then((dataSnapshot) => {
+			findUserByEmail(currentUser.email).then((dataSnapshot) => {
 				// Returns true if there are values, false if there are no values
 				if (dataSnapshot.exists()) {
-					dispatch({
-						type: STORE_USER_DB_ENTRY,
-						payload: dataSnapshot.exportVal()
-					});
+					dispatch(storeUserDBEntry(dataSnapshot.exportVal()));
 				} else {
 					// If user doesn't already exist, add them to the database
 					let uid = genUid.sync(16);
@@ -43,12 +40,19 @@ export function createNewUser() {
 	};
 }
 
+export function storeUserDBEntry(dBEntry) {
+	return {
+		type: STORE_USER_DB_ENTRY,
+		payload: dBEntry
+	};
+}
+
 // dataSnapshot.exportVal();
 export function addCharacterToUser(charUid, charName) {
 	let currentUser = firebase.auth().currentUser;
 	if (currentUser) {
 		// Search for this user in the database
-		let userQuery = database.ref('users').orderByChild('email').equalTo(currentUser.email);
+		let userQuery = userQueryByEmail(currentUser.email);
 		userQuery.once('value').then((dataSnapshot) => {
 			// Look at the results, if there, then
 			if (dataSnapshot.exists()) {
@@ -68,7 +72,7 @@ export function addRaceToUser(raceUid, raceName) {
 	let currentUser = firebase.auth().currentUser;
 	if (currentUser) {
 		// Search for this user in the database
-		let userQuery = database.ref('users').orderByChild('email').equalTo(currentUser.email);
+		let userQuery = userQueryByEmail(currentUser.email);
 		userQuery.once('value').then((dataSnapshot) => {
 			// Look at the results, if there, then
 			if (dataSnapshot.exists()) {

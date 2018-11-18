@@ -23,7 +23,7 @@ export function Resources() {
 	this.focus = 0;
 }
 
-export function Character() {
+export function CharacterData() {
 	this.stats = new Stats();
 	this.currentResources = new Resources();
 	this.maxResources = new Resources();
@@ -35,6 +35,16 @@ export function Character() {
 	this.abilities = {0: new Ability()};
 	this.inventory = {0: new InventoryItem()};
 	this.equipment = new Equipment();
+}
+
+export function MetaData() {
+	this.associatedGame = 'Unnamed';
+	this.associatedPlayer = 'Unknown';
+}
+
+export function Character() {
+	this.data = new CharacterData();
+	this.metaData = new MetaData();
 }
 
 export function Skill() {
