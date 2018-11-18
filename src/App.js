@@ -9,12 +9,13 @@ import CharacterSheet from "./components/CharacterSheet/";
 import HeaderMenu from './components/HeaderMenu';
 import UserHomePage from './components/UserHomePage';
 import {getUserFromCookies} from './utils/cookie-utils';
-import {isUserAuthenticated} from './utils/firebase-utils';
+import {isUserAuthenticated, checkForAuthentication} from './utils/firebase-utils';
 import {reinstantiateUserFromCookie} from './redux/actions/user-auth';
 
 
 class App extends Component {
 	componentDidMount() {
+		checkForAuthentication();
 		// If user is not logged in, check to see if auth user is inside cookies
 		// if (!this.props.userInfo.isLoggedIn) {
 		// 	getUserFromCookies(this.props.cookies);

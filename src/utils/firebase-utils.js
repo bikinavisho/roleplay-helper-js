@@ -6,6 +6,23 @@ export function isUserAuthenticated() {
 	return Boolean(firebase.auth().currentUser);
 }
 
+export function checkForAuthentication() {
+	let userFound = false;
+	let unsubscribe = firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			userFound = true;
+			// User is signed in.
+			console.log("HOUSTON WE HAVE AUTH!")
+		} else {
+			console.log("No auth :(")
+		}
+	});
+	if (userFound) {
+		unsubscribe();
+	}
+
+}
+
 export function userQueryByEmail(email) {
 	return database.ref('users').orderByChild('email').equalTo(email);
 }
