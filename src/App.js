@@ -15,6 +15,7 @@ import {reinstantiateUserFromCookie} from './redux/actions/user-auth';
 
 class App extends Component {
 	componentDidMount() {
+		console.log('APP user is authenticated (componentDidMount): ', isUserAuthenticated());
 		checkForAuthentication();
 		// If user is not logged in, check to see if auth user is inside cookies
 		// if (!this.props.userInfo.isLoggedIn) {
@@ -25,7 +26,7 @@ class App extends Component {
 
 	render() {
 		console.log('APP get all cookies: ', this.props.cookies.getAll());
-		console.log('APP user is authenticated: ', isUserAuthenticated());
+		console.log('APP user is authenticated (render): ', isUserAuthenticated());
 		return (
 			<React.Fragment>
 				<HeaderMenu/>

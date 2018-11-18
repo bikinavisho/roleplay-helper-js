@@ -7,19 +7,15 @@ export function isUserAuthenticated() {
 }
 
 export function checkForAuthentication() {
-	let userFound = false;
-	let unsubscribe = firebase.auth().onAuthStateChanged(function(user) {
+	console.log('checking for authentication')
+	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
-			userFound = true;
 			// User is signed in.
 			console.log("HOUSTON WE HAVE AUTH!")
 		} else {
 			console.log("No auth :(")
 		}
 	});
-	if (userFound) {
-		unsubscribe();
-	}
 
 }
 
