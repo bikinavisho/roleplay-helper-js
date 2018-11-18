@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {withCookies} from 'react-cookie';
 import '../css/responsive-menu.css';
 import {popUpSignIn, logOff} from '../auth/authenticate';
 import {storeUserData, clearUserData, createNewUser} from '../redux/actions/user-auth';
+import {putUserIntoCookies, removeUserFromCookies} from '../utils/cookie-utils';
 
 
 class HeaderMenu extends Component {
@@ -26,11 +28,15 @@ class HeaderMenu extends Component {
 		popUpSignIn().then(() => {
 			this.props.storeUserData();
 			this.props.createNewUser();
+			putUserIntoCookies(this.props.cookies);
 		})
 	}
 
 	logout() {
-		logOff().then(this.props.clearUserData);
+		logOff().then(() => {
+			this.props.clearUserData();
+			removeUserFromCookies(this.props.cookies);
+		});
 	}
 
 	render() {
@@ -77,6 +83,7 @@ class HeaderMenu extends Component {
 }
 
 HeaderMenu.propTypes = {
+	cookies: PropTypes.object,			// from react-cookies (withCookies)
 	clearUserData: PropTypes.func,
 	createNewUser: PropTypes.func,
 	storeUserData: PropTypes.func,
@@ -89,4 +96,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, {storeUserData, clearUserData, createNewUser})(HeaderMenu);
+export default withCookies(connect(mapStateToProps, {storeUserData, clearUserData, createNewUser})(HeaderMenu));

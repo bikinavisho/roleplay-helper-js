@@ -1,4 +1,10 @@
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 import database from '../data/database';
+
+export function isUserAuthenticated() {
+	return Boolean(firebase.auth().currentUser);
+}
 
 export function userQueryByEmail(email) {
 	return database.ref('users').orderByChild('email').equalTo(email);

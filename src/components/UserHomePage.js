@@ -44,17 +44,20 @@ class UserHomePage extends Component {
 			<div>
 				<h2>Your Characters</h2>
 				<div>
-					{this.state.noCharacterData && "Looks like you don't have any characters yet. Start by creating one!"}
+					{this.state.noCharacterData &&
+					<div>Looks like you don't have any characters yet. Start by creating one!</div>}
 				</div>
 				<hr/>
 				<h2>Your Races</h2>
 				<div>
-					{this.state.noRaceData && "Looks like you don't have any races yet. Start by creating one!"}
+					{this.state.noRaceData &&
+					<div>Looks like you don't have any races yet. Start by creating one!</div>}
 				</div>
 			</div>
 		);
 	}
 }
+
 UserHomePage.propTypes = {
 	userInfo: PropTypes.object   // redux state
 };

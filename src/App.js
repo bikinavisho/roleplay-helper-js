@@ -1,13 +1,26 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router-dom'
+import {connect} from 'react-redux';
+import {withCookies} from 'react-cookie';
 import Home from './components/Home';
 import './css/App.css';
 import CharacterSheet from "./components/CharacterSheet/";
 import HeaderMenu from './components/HeaderMenu';
 import UserHomePage from './components/UserHomePage';
+import {getUserFromCookies} from './utils/cookie-utils';
+import {reinstantiateUserFromCookie} from './redux/actions/user-auth';
 
 
 class App extends Component {
+	componentDidMount() {
+		// If user is not logged in, check to see if auth user is inside cookies
+		if (!this.props.userInfo.isLoggedIn) {
+			getUserFromCookies(this.props.cookies);
+			this.props.reinstantiateUserFromCookie();
+		}
+	}
+
 	render() {
 		return (
 			<React.Fragment>
@@ -24,4 +37,16 @@ class App extends Component {
 	}
 }
 
-export default App;
+App.propTypes = {
+	cookies: PropTypes.object, 		// from react-cookies (withCookies)
+	reinstantiateUserFromCookie: PropTypes.func,	// from redux
+	userInfo: PropTypes.object  	// from redux
+};
+
+function mapStateToProps(state) {
+	return {
+		userInfo: state.userInfo
+	};
+}
+
+export default withCookies(connect(mapStateToProps, {reinstantiateUserFromCookie})(App));

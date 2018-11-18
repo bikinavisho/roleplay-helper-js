@@ -47,6 +47,12 @@ export function storeUserDBEntry(dBEntry) {
 	};
 }
 
+export function reinstantiateUserFromCookie() {
+	return (dispatch) => {
+		console.log('ACTION DISPATCHED: USER SHOULD GO TO STORE NOW')
+	};
+}
+
 // dataSnapshot.exportVal();
 export function addCharacterToUser(charUid, charName) {
 	let currentUser = firebase.auth().currentUser;
