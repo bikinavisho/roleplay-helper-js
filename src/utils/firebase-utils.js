@@ -6,6 +6,11 @@ export function isUserAuthenticated() {
 	return Boolean(firebase.auth().currentUser);
 }
 
+/**
+ * This function listens for authState to have changed, then executes the passed-in callback function
+ *
+ * @param {function} callbackFunction
+ */
 export function checkForAuthentication(callbackFunction) {
 	firebase.auth().onAuthStateChanged(callbackFunction);
 }

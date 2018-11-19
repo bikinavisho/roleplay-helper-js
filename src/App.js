@@ -11,7 +11,6 @@ import UserHomePage from './components/UserHomePage';
 
 class App extends Component {
 	render() {
-		console.log('APP get all cookies: ', this.props.cookies.getAll());
 		return (
 			<React.Fragment>
 				<HeaderMenu/>

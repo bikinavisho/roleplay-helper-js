@@ -2,12 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {withCookies} from 'react-cookie';
 import '../css/responsive-menu.css';
 import {popUpSignIn, logOff} from '../auth/authenticate';
-import {storeUserData, clearUserData, getUserDatabaseData} from '../redux/actions/user-auth';
-import {removeUserFromCookies} from '../utils/cookie-utils';
-import {checkForAuthentication} from "../utils/firebase-utils";
+import {storeUserData, clearUserData} from '../redux/actions/user-auth';
+import {checkForAuthentication} from '../utils/firebase-utils';
 
 
 class HeaderMenu extends Component {
@@ -25,34 +23,29 @@ class HeaderMenu extends Component {
 		});
 		checkForAuthentication((user) => {
 			if (user) {
-				this.props.storeUserData();
-				this.props.getUserDatabaseData(false);
+				this.props.storeUserData(false);
 			}
 		});
 	}
 
 	login() {
 		popUpSignIn().then(() => {
-			this.props.storeUserData();
-			this.props.getUserDatabaseData(true);
+			this.props.storeUserData(true);
 		})
 	}
 
 	logout() {
 		logOff().then(() => {
 			this.props.clearUserData();
-			removeUserFromCookies(this.props.cookies);
 		});
 	}
 
 	render() {
-		console.log('HEADER MENU COOKIES: ', this.props.cookies.getAll());
-
 		return (
 			<div className="custom-menu-wrapper">
 				<div className="pure-menu custom-menu custom-menu-top">
-					<a href="#" className="pure-menu-heading custom-menu-brand">Roleplay Helper</a>
-					<a href="#" className="custom-menu-toggle" id="toggle">
+					<Link to="/" className="pure-menu-heading custom-menu-brand">Roleplay Helper</Link>
+					<a href="javascript:" className="custom-menu-toggle" id="toggle">
 						<s className="bar"/><s className="bar"/>
 					</a>
 				</div>
@@ -91,9 +84,7 @@ class HeaderMenu extends Component {
 }
 
 HeaderMenu.propTypes = {
-	cookies: PropTypes.object,			// from react-cookies (withCookies)
 	clearUserData: PropTypes.func,
-	getUserDatabaseData: PropTypes.func,
 	storeUserData: PropTypes.func,
 	userInfo: PropTypes.object
 };
@@ -104,8 +95,7 @@ function mapStateToProps(state) {
 	};
 }
 
-export default withCookies(connect(mapStateToProps, {
+export default connect(mapStateToProps, {
 	storeUserData,
-	clearUserData,
-	getUserDatabaseData
-})(HeaderMenu));
+	clearUserData
+})(HeaderMenu);

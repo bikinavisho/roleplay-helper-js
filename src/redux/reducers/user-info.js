@@ -1,6 +1,8 @@
 import * as userActionTypes from '../actions/user-auth';
 
-export default function (state = {}, action = {}) {
+const initialState = {isLoggedIn: false, loggedInUser: 'not signed in'};
+
+export default function (state = initialState, action = {}) {
 	switch(action.type) {
 		case userActionTypes.STORE_USER_DATA:
 			let user = action.payload;
@@ -15,7 +17,7 @@ export default function (state = {}, action = {}) {
 				return {...state, isLoggedIn: true, loggedInUser: userData};
 			} else {
 				// No user is signed in.
-				return {...state, isLoggedIn: false, loggedInUser: 'not signed in'};
+				return initialState;
 			}
 
 		case userActionTypes.STORE_USER_DB_ENTRY:
@@ -35,7 +37,7 @@ export default function (state = {}, action = {}) {
 
 		case userActionTypes.CLEAR_USER_DATA:
 			// When the user is logged out, clear out all of their data
-			return {isLoggedIn: false, loggedInUser: 'not signed in'};
+			return initialState;
 	}
 
 	return state;

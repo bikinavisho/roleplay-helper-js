@@ -10,29 +10,31 @@ export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
 export const STORE_USER_DB_ENTRY = 'STORE_USER_DB_ENTRY';
 export const STORE_USER_UID = 'STORE_USER_UID';
 
-export function storeUserData() {
-	return {
-		type: STORE_USER_DATA,
-		payload: firebase.auth().currentUser
-	};
-}
-
-export function getUserDatabaseData(isNew = false) {
+export function storeUserData(isNew = false) {
 	return (dispatch) => {
-		let currentUser = firebase.auth().currentUser;
+		let {currentUser} = firebase.auth();
+		dispatch({
+			type: STORE_USER_DATA,
+			payload: currentUser
+		});
+		// get or create associated user data in our database
 		if (currentUser) {
 			// Search for instances in the database that might already have this email address
 			findUserByEmail(currentUser.email).then((dataSnapshot) => {
 				// Returns true if there are values, false if there are no values
 				if (dataSnapshot.exists()) {
-					dispatch(storeUserDBEntry(dataSnapshot.exportVal()));
+					dispatch({
+						type: STORE_USER_DB_ENTRY,
+						payload: dataSnapshot.exportVal()
+					});
 				} else if (isNew) {
 					// If user doesn't already exist, add them to the database
 					let uid = genUid.sync(16);
-					database.ref('users/' + uid).set(new User(currentUser.email, 'player'));
+					let userObject = new User(currentUser.email, 'player');
+					database.ref('users/' + uid).set(userObject);
 					dispatch({
 						type: STORE_USER_UID,
-						payload: {uid, email: currentUser.email}
+						payload: {uid, ...userObject}
 					});
 				}
 			});
@@ -40,10 +42,9 @@ export function getUserDatabaseData(isNew = false) {
 	};
 }
 
-export function storeUserDBEntry(dBEntry) {
+export function clearUserData() {
 	return {
-		type: STORE_USER_DB_ENTRY,
-		payload: dBEntry
+		type: CLEAR_USER_DATA
 	};
 }
 
@@ -88,8 +89,3 @@ export function addRaceToUser(raceUid, raceName) {
 	}
 }
 
-export function clearUserData() {
-	return {
-		type: CLEAR_USER_DATA
-	};
-}
