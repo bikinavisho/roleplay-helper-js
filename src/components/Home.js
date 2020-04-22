@@ -6,7 +6,7 @@ import database from '../data/database';
 
 
 class Home extends Component {
-	constructor(prop) {
+	constructor(props) {
 		super(props);
 
 		this.submitCharacterForm = this.submitCharacterForm.bind(this);
