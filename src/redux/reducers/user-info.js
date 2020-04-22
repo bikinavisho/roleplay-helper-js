@@ -38,7 +38,7 @@ export default function (state = initialState, action = {}) {
 		case userActionTypes.CLEAR_USER_DATA:
 			// When the user is logged out, clear out all of their data
 			return initialState;
+		default:
+			return state;
 	}
-
-	return state;
 }

@@ -1,3 +1,6 @@
+/* eslint-disable */
+//TODO: POLISH THIS FILE, ENABLE ESLINT
+
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import provider from './provider';

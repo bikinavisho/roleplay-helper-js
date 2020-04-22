@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -42,6 +42,13 @@ class UserHomePage extends Component {
 
 		return (
 			<div>
+				{this.props.userInfo && this.props.userInfo.loggedInUser && this.props.userInfo.loggedInUser.displayName &&
+					<Fragment>
+						<h1>Hello, {this.props.userInfo.loggedInUser.displayName}.</h1>
+						<hr/>
+					</Fragment>
+				}
+
 				<h2>Your Characters</h2>
 				<div>
 					{this.state.noCharacterData &&

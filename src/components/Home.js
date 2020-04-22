@@ -6,11 +6,23 @@ import database from '../data/database';
 
 
 class Home extends Component {
+	constructor(prop) {
+		super(props);
+
+		this.submitCharacterForm = this.submitCharacterForm.bind(this);
+	}
+
 	submitCharacterForm(values) {
 		// values.name
 		database.ref('characters/' + 1).set({
 			characterName: values.name
 		});
+		// store the character's name under the player
+		if (this.props.userInfo && this.props.userInfo.userData && this.props.userInfo.userData.uid) {
+			database.ref(`users/${this.props.userInfo.userData.uid}/${values.name}`).set({
+				characterName: values.name
+			});
+		}
 	}
 	render() {
 		return (
