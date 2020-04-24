@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import _ from 'lodash'
 
 class UserHomePage extends Component {
@@ -20,14 +20,10 @@ class UserHomePage extends Component {
       // If there is no data, display alternative message
       if (_.isEmpty(userData.characters)) {
         this.setState({ noCharacterData: true })
-      } else {
-        // TODO: Fetch Characters and display them
       }
       // If there is no data, display alternative message
       if (_.isEmpty(userData.races)) {
         this.setState({ noRaceData: true })
-      } else {
-        // TODO: Fetch Races and display them
       }
     }
   }
@@ -48,8 +44,13 @@ class UserHomePage extends Component {
 
         <h2>Your Characters</h2>
         <div>
-          {this.state.noCharacterData &&
-            <div>Looks like you don't have any characters yet. Start by creating one!</div>}
+          {this.state.noCharacterData ?
+            <div>Looks like you don't have any characters yet. Start by creating one!</div> :
+            <ul>
+              {_.toPairs(this.props.userInfo.userData.characters).map((character) => {
+                return (<li><Link to={`/character/${character[0]}`}>{character[1]}</Link></li>)
+              })}
+            </ul>}
         </div>
         <hr />
         <h2>Your Races</h2>
