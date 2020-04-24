@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import CharacterNameForm from './CharacterNameForm';
 // import database from '../data/database';
-import {addCharacterToUser, initializeCharacterData} from '../redux/actions/character-submit';
+import {addCharacterToUser, initializeCharacterData} from '../redux/actions/character-access';
 
 
 class Home extends Component {
@@ -34,7 +34,7 @@ class Home extends Component {
 
 	render() {
 		if (this.state.redirectToCharacterSheet && this.state.characterUid) {
-			return (<Redirect to={`/characters/${this.state.characterUid}`} />);
+			return (<Redirect to={`/character/${this.state.characterUid}`} />);
 		}
 
 		return (

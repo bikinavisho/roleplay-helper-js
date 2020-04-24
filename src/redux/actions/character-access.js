@@ -4,11 +4,19 @@ import {userQueryByEmail} from '../../utils/firebase-utils';
 import genUid from 'uid-safe';
 
 export const SAVE_CHARACTER_NAME = 'SAVE_CHARACTER_NAME'
+export const STORE_CHARACTER_DATA = 'STORE_CHARACTER_DATA'
 
 export function initializeCharacterData () {
   return (dispatch) => {
-    // console.log(database.ref('characters'));
-  };
+    database.ref('characters').once('value').then((dataSnapshot) => {
+      dispatch(
+        {
+          type: STORE_CHARACTER_DATA,
+          payload: dataSnapshot.exportVal()
+        }
+      )
+    })
+  }
 }
 
 // dataSnapshot.exportVal();
@@ -31,9 +39,8 @@ export function addCharacterToUser (charName) {
   					userQuery.ref.child(currentUserGuid).child('characters').set({...currentUserCharacterData, [charUid]: charName });
   				} else {
   					// else, create characters child with associated data
-            // TODO: USERQUERY.REF IS JUST THE `/users/`, NOT OUR USER
+            // USERQUERY.REF IS AT THE `/users/` LEVEL
   					userQuery.ref.child(currentUserGuid).set({...currentUserData, characters: { [charUid]: charName } });
-            // userQuery.ref.set({...dataSnapshot.exportVal(), characters: { [charUid]: charName } });
   				}
           // Add character uid and name to the character set of the db
           database.ref('characters/' + charUid).set({

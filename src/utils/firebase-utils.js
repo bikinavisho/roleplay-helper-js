@@ -29,3 +29,19 @@ export function findUserByEmail (email) {
   // Search for instances in the database that might already have this email address
   return userQueryByEmail(email).once('value')
 }
+
+export function characterQueryByUid (uid) {
+  return database.ref('characters').child(uid)
+}
+
+export function findCharacterByUid (uid) {
+  return characterQueryByUid(uid).once('value')
+}
+
+export function getCharacterData(characterUid) {
+  return findCharacterByUid(characterUid).then((dataSnapshot) => {
+    if (dataSnapshot.exists()) {
+      return dataSnapshot.exportVal()
+    }
+  })
+}
