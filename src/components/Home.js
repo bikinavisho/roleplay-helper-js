@@ -1,30 +1,42 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import CharacterNameForm from './CharacterNameForm';
-import database from '../data/database';
+// import database from '../data/database';
+import {addCharacterToUser, initializeCharacterData} from '../redux/actions/character-submit';
 
 
 class Home extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			characterUid: undefined,
+			redirectToCharacterSheet: false
+		};
+
 		this.submitCharacterForm = this.submitCharacterForm.bind(this);
 	}
 
 	submitCharacterForm(values) {
-		// values.name
-		database.ref('characters/' + 1).set({
-			characterName: values.name
+		// values.name contains the field's value
+		let characterUid = this.props.addCharacterToUser(values.name);
+		this.setState({
+			redirectToCharacterSheet: true,
+			characterUid
 		});
-		// store the character's name under the player
-		if (this.props.userInfo && this.props.userInfo.userData && this.props.userInfo.userData.uid) {
-			database.ref(`users/${this.props.userInfo.userData.uid}/${values.name}`).set({
-				characterName: values.name
-			});
-		}
 	}
+
+	componentDidMount() {
+		this.props.initializeCharacterData();
+	}
+
 	render() {
+		if (this.state.redirectToCharacterSheet && this.state.characterUid) {
+			return (<Redirect to={`/characters/${this.state.characterUid}`} />);
+		}
+
 		return (
 			<div>
 				<header>
@@ -42,6 +54,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
+	addCharacterToUser: PropTypes.func,
+	initializeCharacterData: PropTypes.func,
 	userInfo: PropTypes.object
 };
 
@@ -51,4 +65,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {addCharacterToUser, initializeCharacterData})(Home);

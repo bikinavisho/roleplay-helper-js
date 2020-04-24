@@ -58,3 +58,5 @@ cmake-build-release/
 # IntelliJ
 out/
 
+# Project Specific Files
+.env

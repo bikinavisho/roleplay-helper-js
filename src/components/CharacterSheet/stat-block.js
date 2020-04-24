@@ -1,41 +1,41 @@
-import React, {Component} from 'react';
-import ToggleField from '../toggle-field';
+import React, { Component } from 'react'
+import ToggleField from '../toggle-field'
 
 class StatBlock extends Component {
-	constructor(props) {
-		super(props);
+  constructor (props) {
+    super(props)
 
-		this.statNames = [
-			'Power', 'Agility', 'Constitution', 'Acuity', 'Intellect'
-		];
-	}
+    this.statNames = [
+      'Power', 'Agility', 'Constitution', 'Acuity', 'Intellect'
+    ]
+  }
 
-	render() {
-		return (
-			<table className="pure-table pure-table-horizontal stat-table">
-				<thead>
-				<tr>
-					<th>Stat</th>
-					<th>Value</th>
-					<th>XP</th>
-				</tr>
-				</thead>
-				<tbody>
-				{this.statNames.map((stat, index) => {
-					return (
-						<tr key={index} className="stat-row">
-							<td>{stat}</td>
-							<td><ToggleField/></td>
-							<td>
+  render () {
+    return (
+      <table className='pure-table pure-table-horizontal stat-table'>
+        <thead>
+          <tr>
+            <th>Stat</th>
+            <th>Value</th>
+            <th>XP</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.statNames.map((stat, index) => {
+            return (
+              <tr key={index} className='stat-row'>
+                <td>{stat}</td>
+                <td><ToggleField /></td>
+                <td>
 								0/10
-							</td>
-						</tr>
-					);
-				})}
-				</tbody>
-			</table>
-		);
-	}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    )
+  }
 }
 
-export default StatBlock;
+export default StatBlock
