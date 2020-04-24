@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import CharacterNameForm from './CharacterNameForm';
-// import database from '../data/database';
 import {addCharacterToUser, initializeCharacterData} from '../redux/actions/character-access';
 
 
@@ -29,7 +28,9 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		this.props.initializeCharacterData();
+		if (this.props.userInfo.isLoggedIn) {
+			this.props.initializeCharacterData();
+		}
 	}
 
 	render() {
