@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import '../css/responsive-menu.css'
 import { popUpSignIn, logOff } from '../auth/authenticate'
 import { storeUserData, clearUserData } from '../redux/actions/user-auth'
@@ -57,13 +57,15 @@ class HeaderMenu extends Component {
           <div className='custom-menu-screen' />
           <ul className='pure-menu-list'>
             <li className='pure-menu-item'>
-              <Link to='/' className='pure-menu-link'>Home</Link>
+              <NavLink to='/' className='pure-menu-link' activeClassName='pure-menu-selected'>
+                <i className="fas fa-home"/>&nbsp;Home
+              </NavLink>
             </li>
             {this.props.userInfo.isLoggedIn && this.props.userInfo.userData &&
               <li className='pure-menu-item'>
-                <Link to={'/user/' + this.props.userInfo.userData.uid} className='pure-menu-link'>
+                <NavLink to={'/user/' + this.props.userInfo.userData.uid} className='pure-menu-link' activeClassName='pure-menu-selected'>
                   <i className='fas fa-user' />&nbsp;User: {this.props.userInfo.loggedInUser.displayName}
-                </Link>
+                </NavLink>
               </li>}
             <li className='pure-menu-item'>
               {this.props.userInfo.isLoggedIn

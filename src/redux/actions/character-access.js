@@ -1,9 +1,10 @@
 import * as firebase from 'firebase/app';
 import database from '../../data/database';
-import {userQueryByEmail} from '../../utils/firebase-utils';
+import {userQueryByEmail, getCharacterData} from '../../utils/firebase-utils';
 import genUid from 'uid-safe';
 
 export const SAVE_CHARACTER_NAME = 'SAVE_CHARACTER_NAME'
+export const STORE_ALL_CHARACTER_DATA = 'STORE_ALL_CHARACTER_DATA'
 export const STORE_CHARACTER_DATA = 'STORE_CHARACTER_DATA'
 
 export function initializeCharacterData () {
@@ -11,7 +12,7 @@ export function initializeCharacterData () {
     database.ref('characters').once('value').then((dataSnapshot) => {
       dispatch(
         {
-          type: STORE_CHARACTER_DATA,
+          type: STORE_ALL_CHARACTER_DATA,
           payload: dataSnapshot.exportVal()
         }
       )
@@ -59,4 +60,21 @@ export function addCharacterToUser (charName) {
   	}
     return charUid
   }
+}
+
+export function getAndStoreCharacterData(characterId) {
+  return (dispatch) => {
+    return getCharacterData(characterId).then((dataSnapshot) => {
+      if (dataSnapshot.exists()) {
+        dispatch({
+          type: STORE_CHARACTER_DATA,
+          payload: {
+            characterUid: characterId,
+            data: dataSnapshot.exportVal()
+          }
+        });
+        return dataSnapshot.exportVal()
+      }
+    });
+  };
 }

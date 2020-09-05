@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import _ from 'lodash';
 import CharacterNameForm from './CharacterNameForm';
 import {addCharacterToUser, initializeCharacterData} from '../redux/actions/character-access';
 
@@ -28,7 +29,7 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		if (this.props.userInfo.isLoggedIn) {
+		if (this.props.userInfo.isLoggedIn && _.isEmpty(this.props.characterList)) {
 			this.props.initializeCharacterData();
 		}
 	}
@@ -56,13 +57,15 @@ class Home extends Component {
 
 Home.propTypes = {
 	addCharacterToUser: PropTypes.func,
+	characterList: PropTypes.object,
 	initializeCharacterData: PropTypes.func,
 	userInfo: PropTypes.object
 };
 
 function mapStateToProps(state) {
 	return {
-		userInfo: state.userInfo
+		userInfo: state.userInfo,
+		characterList: state.characterList
 	};
 }
 

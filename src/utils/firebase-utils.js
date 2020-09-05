@@ -39,9 +39,5 @@ export function findCharacterByUid (uid) {
 }
 
 export function getCharacterData(characterUid) {
-  return findCharacterByUid(characterUid).then((dataSnapshot) => {
-    if (dataSnapshot.exists()) {
-      return dataSnapshot.exportVal()
-    }
-  })
+  return findCharacterByUid(characterUid)
 }

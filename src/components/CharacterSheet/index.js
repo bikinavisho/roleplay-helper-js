@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import DiceRolls from './dice-rolls'
 import StatBlock from './stat-block'
 import ResourceBlock from './resource-block'
-import {getCharacterData} from '../../utils/firebase-utils'
+import {getAndStoreCharacterData} from '../../redux/actions/character-access'
 
 import '../../css/character-sheet.css'
 
@@ -21,15 +21,17 @@ class CharacterSheet extends Component {
   }
 
   componentDidMount() {
-    // if data is in reducer, pull from there
-    if (this.props.characterList && this.props.characterList[this.characterId]) {
-      this.setState({characterData: this.props.characterList[this.characterId]});
-    } else {
-      // otherwise, pull from db
-      getCharacterData(this.characterId).then((response) => {
-        this.setState({characterData: response});
-        //TODO: PUT IN REDUX
-      })
+    // Only pull data is user is logged in
+    if (this.props.userInfo && this.props.userInfo.isLoggedIn) {
+      // if data is in reducer, pull from there
+      if (this.props.characterList && this.props.characterList[this.characterId]) {
+        this.setState({characterData: this.props.characterList[this.characterId]});
+      } else {
+        // otherwise, pull from db
+        this.props.getAndStoreCharacterData(this.characterId).then((response) => {
+          this.setState({characterData: response});
+        })
+      }
     }
   }
 
@@ -73,13 +75,15 @@ class CharacterSheet extends Component {
   }
 }
 CharacterSheet.propTypes = {
-  characterList: PropTypes.object
+  characterList: PropTypes.object,
+  userInfo: PropTypes.object
 }
 
 function mapStateToProps(state) {
   return {
-    characterList: state.characterList
+    characterList: state.characterList,
+    userInfo: state.userInfo,
   }
 }
 
-export default connect(mapStateToProps)(CharacterSheet)
+export default connect(mapStateToProps, {getAndStoreCharacterData})(CharacterSheet)

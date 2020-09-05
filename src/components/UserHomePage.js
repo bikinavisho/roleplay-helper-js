@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import _ from 'lodash'
+import {initializeCharacterData} from '../redux/actions/character-access';
 
 class UserHomePage extends Component {
   constructor (props) {
@@ -26,9 +27,13 @@ class UserHomePage extends Component {
         this.setState({ noRaceData: true })
       }
     }
+    if (this.props.userInfo && this.props.userInfo.isLoggedIn && _.isEmpty(this.props.characterList)) {
+      this.props.initializeCharacterData();
+    }
   }
 
   render () {
+    // TODO: make this a HOC
     // If user is not logged in, redirect them to the home page
     if (this.props.userInfo && this.props.userInfo.isLoggedIn === false) {
       return <Redirect to='/' />
@@ -53,7 +58,7 @@ class UserHomePage extends Component {
             </ul>}
         </div>
         <hr />
-        <h2>Your Races</h2>
+        <h2>Your Races (feature WIP)</h2>
         <div>
           {this.state.noRaceData &&
             <div>Looks like you don't have any races yet. Start by creating one!</div>}
@@ -64,13 +69,15 @@ class UserHomePage extends Component {
 }
 
 UserHomePage.propTypes = {
+  characterList: PropTypes.object, // redux state
   userInfo: PropTypes.object // redux state
 }
 
 function mapStateToProps (state) {
   return {
-    userInfo: state.userInfo
+    userInfo: state.userInfo,
+		characterList: state.characterList
   }
 }
 
-export default connect(mapStateToProps)(UserHomePage)
+export default connect(mapStateToProps, {initializeCharacterData})(UserHomePage)
