@@ -1,4 +1,5 @@
 import * as userActionTypes from '../actions/user-auth'
+import {SAVE_CHARACTER_NAME} from '../actions/character-access'
 
 const initialState = { isLoggedIn: false, loggedInUser: 'not signed in' }
 
@@ -34,6 +35,14 @@ export default function (state = initialState, action = {}) {
 
     case userActionTypes.STORE_USER_UID:
       return { ...state, userData: action.payload }
+
+    case SAVE_CHARACTER_NAME:
+      if (action.payload) {
+        let userData = {...state.userData};
+        userData.characters[action.payload.characterUid] = action.payload.characterName;
+        return {...state, userData};
+      }
+      break;
 
     case userActionTypes.CLEAR_USER_DATA:
       // When the user is logged out, clear out all of their data
