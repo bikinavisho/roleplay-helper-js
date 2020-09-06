@@ -57,13 +57,13 @@ class HeaderMenu extends Component {
           <div className='custom-menu-screen' />
           <ul className='pure-menu-list'>
             <li className='pure-menu-item'>
-              <NavLink to='/' className='pure-menu-link' activeClassName='pure-menu-selected'>
+              <NavLink exact to='/' className='pure-menu-link' activeClassName='menu-bar-selected'>
                 <i className="fas fa-home"/>&nbsp;Home
               </NavLink>
             </li>
             {this.props.userInfo.isLoggedIn && this.props.userInfo.userData &&
               <li className='pure-menu-item'>
-                <NavLink to={'/user/' + this.props.userInfo.userData.uid} className='pure-menu-link' activeClassName='pure-menu-selected'>
+                <NavLink to={'/user/' + this.props.userInfo.userData.uid} className='pure-menu-link' activeClassName='menu-bar-selected'>
                   <i className='fas fa-user' />&nbsp;User: {this.props.userInfo.loggedInUser.displayName}
                 </NavLink>
               </li>}

@@ -31,3 +31,8 @@ p {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.menu-bar-selected {
+	color: violet !important;
+	background-color: whitesmoke;
+}
