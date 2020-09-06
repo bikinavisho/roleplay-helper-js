@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../css/toggle-field.css'
 
 class ToggleField extends Component {
@@ -10,7 +11,7 @@ class ToggleField extends Component {
 
     this.state = {
       toggle: false,
-      value: 0
+      value: props.initialValue
     }
   }
 
@@ -29,22 +30,29 @@ class ToggleField extends Component {
 
   render () {
     if (this.state.toggle) {
-      // User presses enter to exit input
+      // User presses enter or clicks away to exit input
       return (
-        <div>
-          <form className='pure-form' onSubmit={this.onToggle}>
-            <input className='toggled-field' onChange={this.onChange} type='number' value={this.state.value} />
-          </form>
-        </div>
+        <form className='pure-form' onSubmit={this.onToggle}>
+          <input className='toggled-field' onChange={this.onChange} onBlur={this.onToggle} type='number' value={this.state.value} size={3}/>
+        </form>
       )
     } else {
       return (
-        <div onDoubleClick={this.onToggle}>
+        <span onDoubleClick={this.onToggle}>
           {this.state.value}
-        </div>
+        </span>
       )
     }
   }
 }
+
+ToggleField.props = {
+  initialValue: PropTypes.number,
+  inputWidth: PropTypes.string
+};
+
+ToggleField.defaultProps = {
+  initialValue: 0
+};
 
 export default ToggleField

@@ -25,8 +25,9 @@ class StatBlock extends Component {
             return (
               <tr key={index} className='stat-row'>
                 <td>{stat}</td>
-                <td><ToggleField /></td>
+                <td><ToggleField initialValue={10} /></td>
                 <td>
+                  {/* TODO: adjust width of ToggleField for XP fields */}
 								0/10
                 </td>
               </tr>
